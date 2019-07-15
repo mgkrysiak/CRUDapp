@@ -20,7 +20,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      products: JSON.parse(localStorage.getItem('recipes'))
+      recipes: JSON.parse(localStorage.getItem('recipes'))
     };
 
     this.onAdd = this.onAdd.bind(this);
@@ -77,12 +77,11 @@ class App extends React.Component {
     return (<div className="App">
       <div className="Container">
         <h1>My Recipes</h1>
+        <AddItem onAdd = {this.onAdd}
+          />,
         {
           this.state.recipes.map(recipe => {
             return (
-              <AddItem
-                onAdd = {this.onAdd}
-                />,
               <RecipeItem
                 key={recipe.name}
                 {...recipe}
