@@ -3,15 +3,7 @@ import './App.css';
 import RecipeItem from './RecipeItem.js';
 import AddItem from './AddItem.js';
 
-const recipes = [
-  {
-    name: 'Spaghetti',
-    ingredients: 'pasta, tomatoes, meatballs'
-  }, {
-    name: 'Porridge',
-    ingredients: 'oatflakes, milk, fruits'
-  }
-];
+const recipes = (localStorage.getItem('recipes')) ? JSON.parse(localStorage.getItem('recipes')) : [ ];
 
 localStorage.setItem('recipes', JSON.stringify(recipes));
 
@@ -30,12 +22,13 @@ class App extends React.Component {
   componentWillMount() {
     const recipes = this.getRecipes();
 
-    this.setState({recipes});
+    this.setState({ recipes });
   }
 
   getRecipes() {
     return JSON.parse(localStorage.getItem('recipes'))
   }
+
 
   onDelete(name) {
     const recipes = this.getRecipes();
@@ -48,14 +41,22 @@ class App extends React.Component {
   }
 
   onAdd(name, ingredients) {
-    const recipes = this.getRecipes();
+    let recipes = this.getRecipes();
 
     recipes.push({
       name,
       ingredients
     });
 
+
+    this.onSave(recipes)
+
+  }
+
+  onSave(recipes) {
     this.setState({ recipes });
+    localStorage.setItem('recipes', JSON.stringify(recipes));
+
   }
 
   onEditSubmit(name, ingredients, originalName) {
@@ -64,12 +65,13 @@ class App extends React.Component {
     recipes = recipes.map(recipe => {
       if (recipe.name === originalName) {
         recipe.name = name;
-        recipe.inredients = ingredients;
+        recipe.ingredients = ingredients;
       }
-      return recipe;
+      return recipe
     });
 
-    this.setState({ recipes })
+    this.onSave(recipes)
+
   }
 
 

@@ -35,7 +35,7 @@ class AddItem extends Component {
           <p>
             <input placeholder='Enter ingredients separated by commas' ref={ingredientsInput => this.ingredientsInput = ingredientsInput}></input>
           </p>
-          <button>Add</button>
+          <button onClick={this.onAdd}>Add</button>
         </form>
       </div>
     );
