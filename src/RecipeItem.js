@@ -5,7 +5,8 @@ class RecipeItem extends Component {
     super(props);
 
     this.state = {
-      isEdit: false
+      isEdit: false,
+      showIngredients: false
     };
 
     this.onDelete = this.onDelete.bind(this);
@@ -31,6 +32,24 @@ class RecipeItem extends Component {
     this.setState({ isEdit: false });
   }
 
+  showIngredients = () => {
+    this.setState({
+      showIngredients: !this.state.showIngredients
+    })
+  }
+
+  Ingredients() {
+    const ingredients = this.props.ingredients.split(', ')
+
+    return (
+      <div>
+        {ingredients.map(ingredient => (
+          <div className="Ingredient" key={ingredient}>{ingredient}</div>
+        ))}
+      </div>
+    );
+  }
+
   render() {
     const {name, ingredients} = this.props;
 
@@ -51,13 +70,14 @@ class RecipeItem extends Component {
               <p>
                 <input placeholder='Enter ingredients separated by commas' ref={ingredientsInput => this.ingredientsInput = ingredientsInput} defaultValue={ingredients}></input>
               </p>
-              <button>Save</button>
+              <button onClick={this.onEditSubmit}>Save</button>
             </form>
           </div>)
           : (<div>
-            <span>{name}</span>
+            <span onClick={this.showIngredients}>{name}</span>
             <button onClick={this.onEdit}>Edit</button>
             <button onClick={this.onDelete}>Delete</button>
+            {(this.state.showIngredients) ? this.Ingredients() : null}
           </div>)
       }
     </div>);

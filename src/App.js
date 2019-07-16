@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-import RecipeItem from './RecipeItem.js'
-import AddItem from './AddItem.js'
+import RecipeItem from './RecipeItem.js';
+import AddItem from './AddItem.js';
 
 const recipes = [
   {
@@ -78,7 +78,7 @@ class App extends React.Component {
       <div className="Container">
         <h1>My Recipes</h1>
         <AddItem onAdd = {this.onAdd}
-          />,
+          />
         {
           this.state.recipes.map(recipe => {
             return (
@@ -87,10 +87,11 @@ class App extends React.Component {
                 {...recipe}
                 onDelete = {this.onDelete}
                 onEditSubmit = {this.onEditSubmit}
+                onAdd = {this.onAdd}
                 />);
           })
         }
-        <button onClick={() => this.onAdd}>Add Recipe</button>
+
 
 
       </div>
